@@ -19,6 +19,7 @@ Main:
 Starting the wallet dapp using [Meteor](https://meteor.com/install)
 
     $ cd MoacWallet
+    $ npm install
     $ meteor
 
 Go to http://localhost:3000

@@ -256,7 +256,9 @@
                 "emptyWallet": "您的账号钱包是空的。",
                 "notEnoughFunds": "您此账户并没有足够的资金。",
                 "noReceiver": "您并未指定接收人。",
-                "noAmount": "您并未指定发送数量。"
+                "noAmount": "您并未指定发送数量。",
+                "noAppchainAddress": "您未指定应用链地址",
+                "noViaAddress": "您未指定Vnode的Via地址"
             },
             "texts": {
                 "ownerPaysGas": "瓦斯由钱包合约所有人支付、。",

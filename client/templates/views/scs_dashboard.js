@@ -560,13 +560,13 @@ Template['views_scs_dashboard'].events({
 
         if (value === 'isSending' ){
             TemplateVar.set('isIntra', true);
-
-		}
-		else{
-			TemplateVar.set('isIntra', false);
-			if( value === 'isWithdrawing' )
-				TemplateVar.set('isWithdrawing', true);
-		
+            TemplateVar.set('isWithdrawing', false);
+		} else if (value === 'isWithdrawing' ){
+            TemplateVar.set('isIntra', false);
+            TemplateVar.set('isWithdrawing', true);
+        } else{
+            TemplateVar.set('isIntra', false);
+            TemplateVar.set('isWithdrawing', false);
 		}
 
         //trigger amount box change
@@ -668,6 +668,18 @@ Template['views_scs_dashboard'].events({
             //        content: 'i18n:wallet.contracts.error.noDataProvided',
             //        duration: 2
             //    });
+
+            if (!chain3.isAddress(subChainAddr))
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.noAppchainAddress',
+                duration: 2
+            });
+
+            if (!chain3.isAddress(subChainVia) ) 
+            return GlobalNotification.warning({
+                content: 'i18n:wallet.send.error.noViaAddress',
+                duration: 2
+            });
 
             if (selectedAccount.balance === '0' && (!selectedAccount.owners || tokenAddress === 'mc'))
                 return GlobalNotification.warning({
@@ -954,9 +966,11 @@ Template['views_scs_dashboard'].events({
 							cancel: false
 						});
 					}else{
-					
+                        console.log("err.message", err.message);
 						GlobalNotification.error({
-							content:translateExternalErrorMessage.message(err.message),
+                            //TODO
+                            content:err.message,
+							//content:translateExternalErrorMessage.message(err.message),
 							duration:8
 						});
 					}

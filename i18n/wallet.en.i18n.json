@@ -18,7 +18,8 @@
                 "receive": "Receive",
                 "addWallet": "Add wallet contract",
                 "addAccount": "Add account",
-                "addToken": "Watch token"
+                "addToken": "Watch token",
+                "scs": "AppChain"
             },
             "texts": {
                 "note": "Note",
@@ -289,6 +290,27 @@
                     "3": "probably within 30 seconds",
                     "4": "probably within a few seconds",
                     "5": "probably within a few seconds"
+                }
+            }
+        },
+        "scs":{
+            "asm":{
+                "send":{
+                    "title":"AppChain Transfer",
+                    "to": "To",
+                    "from": "From",
+                    "amount": "Amount",
+					"peer": "To",
+					"dapp": "DAPP Address",
+					"account": "Account",
+					"subChain": "AppChain",
+					"subChain-addr": "AppChain Address",
+					"subChain-via": "Via",
+					"selectTransType": "Transfer Type",
+					"isDepositting": "Deposit to AppChain",
+					"isWithdrawing": "Withdraw from AppChain",
+					"isSending": "Send within AppChain",
+					"transSendSuccess": "Send Success"
                 }
             }
         },

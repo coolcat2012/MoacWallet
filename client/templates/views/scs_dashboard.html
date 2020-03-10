@@ -13,7 +13,7 @@
         <!-- form for ASM -->
         <form class="account-send-form" action="about:blank" target="dapp-form-helper-iframe" autocomplete="on">
 
-		<h1>{{i18n 'wallet.scs.asm.send.title'}}</h1>
+		<h1>{{i18n 'wallet.scs.asm.send.title'}} Block# {{$.Session.get "SCSBlockNumber"}}</h1>
     
 		<h3>{{i18n 'wallet.scs.asm.send.selectTransType' }}</h3>
 		<select name="select-trans-type" class="select-trans-type">
@@ -114,6 +114,7 @@
                     {{else}}
                         <input type="text" min="0" step="any" name="amount" placeholder="0.0" class="dapp-large" pattern="[0-9\.,]*">
                     {{/if}}
+                    AppChain Balance: {{$.Session.get "SCSBalance"}}
     
                     <br>
                     {{#unless TemplateVar.get "subChainDapp"}}

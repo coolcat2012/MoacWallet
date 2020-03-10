@@ -5,6 +5,8 @@ import '../elements/mistAlert.js';
 import '../elements/transactionTable.js';
 import './scs_dashboard.html';
 
+var blockNumberIntervalId = null;
+
 /**
 Template Controllers
 
@@ -125,7 +127,40 @@ var translateExternalErrorMessage = function (message) {
     }
 };
 
+/*
+function formatBlockNumber(monitorAddr, monitorPort,template){
+    scsApi2.init(monitorAddr, monitorPort);
 
+    chain3.scs.getBlockNumber(contract.address, (error, result) => {
+        if(!error){
+            // Session.set('blockNumber', numeral(result).format('0,0'));
+            Session.set('blockNumber', result);
+        }
+    });
+};
+*/
+
+var getScsBlockNumber = function() {
+    console.log("getting SCS-BlockNumber");
+    chain3.scs.getBlockNumber("0x45c7e81309134dc1eb5798daf93b8890d218bab6", (error, result) => {
+        if(!error){
+            // Session.set('blockNumber', numeral(result).format('0,0'));
+            Session.set('SCSBlockNumber', result);
+            console.log("SCS-BlockNumber", result);
+        } else {
+            console.log("SCS-BlockNumber Error", error);
+        }
+    });
+
+    chain3.scs.getBalance("0x45c7e81309134dc1eb5798daf93b8890d218bab6", "0x073FF2ABddbE31c2754CD965bd4009715e9126A9",(error, result) => {
+        if(!error){
+            Session.set('SCSBalance', chain3.fromSha(result));
+            console.log("SCS-SCSBalance2", chain3.fromSha(result));
+        } else {
+            console.log("SCS-SCSBalance Error", error);
+        }
+    });
+};
 
 // Set basic variables
 Template['views_scs_dashboard'].onCreated(function () {
@@ -139,7 +174,7 @@ Template['views_scs_dashboard'].onCreated(function () {
 	TemplateVar.set('isIntra',false);
 	
     TemplateVar.set('monitorAddr','localhost');
-    TemplateVar.set('monitorPort',8548);
+    TemplateVar.set('monitorPort',7548);
     Tracker.autorun(function () {
         scsApi2.init(TemplateVar.get(template, 'monitorAddr'), TemplateVar.get(template, 'monitorPort'));
     })
@@ -151,6 +186,14 @@ Template['views_scs_dashboard'].onCreated(function () {
 	//TemplateVar.set('toSubChain', false);
 	TemplateVar.set('isIntra', false);
 	TemplateVar.set('isWithdrawing', false);
+
+    Session.setDefault('SCSBlockNumber', 0);
+    getScsBlockNumber();
+
+    clearInterval(blockNumberIntervalId);
+    blockNumberIntervalId = setInterval(function() {
+        getScsBlockNumber()
+    }, 1000);
 
     // Deploy contract
     //if (FlowRouter.getRouteName() === 'deployContract') {
